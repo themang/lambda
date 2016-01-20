@@ -1,0 +1,6 @@
+{
+  "name": "test-code",
+  "description": "Cool test function.",
+  "memory": 256,
+  "timeout": 5
+}
