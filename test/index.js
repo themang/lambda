@@ -12,7 +12,6 @@ import hasha from 'hasha'
 
 // utils
 import bind from '@f/bind-middleware'
-import assign from '@f/assign'
 import throws from '@f/throws'
 
 // redux
@@ -25,7 +24,7 @@ test('lambda should create', function (t) {
   let io = bind([Flow(), Log(log), HandleActions(handler)])
 
   let lambda = Lambda(path.resolve(__dirname + '/code'), {name: 'code'})
-  let zip = 'module.exports = "foo"'
+  let zip = 'module.exports = \'foo\''
 
   io(lambda.create(zip)).then(function (res) {
     let action = log[0]
@@ -50,7 +49,6 @@ test('lambda should create', function (t) {
   function handler (action) {
     return {Version: 1, FunctionName: 'code'}
   }
-
 })
 
 test('lambda should get config', function (t) {
@@ -70,7 +68,6 @@ test('lambda should get config', function (t) {
     t.equal(payload.method, 'getFunctionConfiguration')
     t.equal(payload.params.FunctionName, 'code')
 
-
     t.equal(res.Version, 1)
 
     t.end()
@@ -79,7 +76,6 @@ test('lambda should get config', function (t) {
   function handler (action) {
     return {Version: 1, FunctionName: 'code'}
   }
-
 })
 
 test('lambda shoud update', function (t) {
@@ -87,7 +83,7 @@ test('lambda shoud update', function (t) {
   let io = bind([Flow(), Log(log), HandleActions(handler)])
 
   let lambda = Lambda(path.resolve(__dirname + '/code'), {name: 'code'})
-  let zip = 'module.exports = "foo"'
+  let zip = 'module.exports = \'foo\''
 
   io(lambda.update(zip)).then(function (res) {
     let action = log[0]
@@ -139,7 +135,6 @@ test('lambda should delete', function (t) {
   function handler (action) {
     return {}
   }
-
 })
 
 test('lambda deploy should update', function (t) {
@@ -147,7 +142,7 @@ test('lambda deploy should update', function (t) {
   let io = bind([Flow(), Log(log), HandleActions(handler)])
 
   let lambda = Lambda(path.resolve(__dirname + '/code'), {name: 'code'})
-  let zip = 'module.exports = "foo"'
+  let zip = 'module.exports = \'foo\''
 
   io(lambda.deploy(zip)).then(function (res) {
     let action1 = log[0]
@@ -190,7 +185,7 @@ test('lambda deploy should create on get config fail', function (t) {
   let io = bind([Flow(throws), Log(log), HandleActions(handler)])
 
   let lambda = Lambda(path.resolve(__dirname + '/code'), {name: 'code'})
-  let zip = 'module.exports = "foo"'
+  let zip = 'module.exports = \'foo\''
 
   io(lambda.deploy(zip)).then(function (res) {
     let action1 = log[0]
@@ -229,7 +224,7 @@ test('lambda deploy should not update if code is the same', function (t) {
   let io = bind([Flow(), Log(log), HandleActions(handler)])
 
   let lambda = Lambda(path.resolve(__dirname + '/code'), {name: 'code'})
-  let zip = 'module.exports = "foo"'
+  let zip = 'module.exports = \'foo\''
 
   io(lambda.deploy(zip)).then(function (res) {
     let action1 = log[0]
@@ -261,30 +256,26 @@ test('lambda deploy should not update if code is the same', function (t) {
   }
 })
 
-// test read config
-
 test('lambda should read config from function.json', function (t) {
   let lambda = Lambda(path.resolve(__dirname + '/code'))
   t.deepEqual(lambda.config, {
-    description: "Cool test function.",
-    handler: "index.handler",
+    description: 'Cool test function.',
+    handler: 'index.handler',
     memory: 256,
-    name: "test-code",
+    name: 'test-code',
     publish: true,
-    runtime: "nodejs",
+    runtime: 'nodejs',
     timeout: 5
   })
   t.end()
 })
-
-// test alias
 
 test('should add alias on create given alias', function (t) {
   let log = []
   let io = bind([Flow(), Log(log), HandleActions(handler)])
 
   let lambda = Lambda(path.resolve(__dirname + '/code'), {name: 'code', alias: 'master'})
-  let zip = 'module.exports = "foo"'
+  let zip = 'module.exports = \'foo\''
 
   io(lambda.create(zip)).then(function (res) {
     let action = log[0]
@@ -317,9 +308,10 @@ test('should add alias on create given alias', function (t) {
     } else {
       return {Version: 1, Name: 'master'}
     }
-
   }
 })
+
+// test invoke
 
 function sha256 (zip) {
   return hasha(zip, {encoding: 'base64', algorithm: 'sha256'}).toString()

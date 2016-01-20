@@ -15,7 +15,6 @@ import pascalCase from 'pascal-case'
 // utils
 import curry from '@f/curry-once'
 import defaults from '@f/defaults'
-import isObject from '@f/is-object'
 import assign from '@f/assign'
 import mapKeys from '@f/map-keys'
 import pick from '@f/pick'
@@ -40,7 +39,7 @@ const createDefaults = {
 }
 
 function LambdaFunction (dir, config) {
-  if (! (this instanceof LambdaFunction)) return new LambdaFunction(dir, config)
+  if (!(this instanceof LambdaFunction)) return new LambdaFunction(dir, config)
   this.dir = dir || process.cwd()
   this.config = defaults(defaults(config || {}, readConfig(dir)), createDefaults)
 }
@@ -65,7 +64,6 @@ LambdaFunction.prototype.deploy = function * (zip) {
 }
 
 LambdaFunction.prototype.deployConfig = function * () {
-  // params
   let params = this.params([
     'name',
     'memory',
@@ -75,12 +73,9 @@ LambdaFunction.prototype.deployConfig = function * () {
     'handler'
   ])
   return yield updateFunctionConfiguration(params)
-
-
 }
 
 LambdaFunction.prototype.create = function * (zip) {
-  //params
   let params = this.params([
     'name',
     'description',
@@ -93,7 +88,6 @@ LambdaFunction.prototype.create = function * (zip) {
   ], {
     Code: {ZipFile: zip}
   })
-
 
   let created = yield createFunction(params)
 
@@ -109,12 +103,11 @@ LambdaFunction.prototype.getConfig = function * () {
 }
 
 LambdaFunction.prototype.update = function * (zip) {
-  //params
-  let params = this.params(['name','publish'], {
+  let params = this.params(['name', 'publish'], {
     ZipFile: zip
   })
 
-  let updated =  yield updateFunctionCode(params)
+  let updated = yield updateFunctionCode(params)
 
   if (this.config.alias) {
     assign(updated, yield this.alias(updated.Version))
@@ -128,13 +121,12 @@ LambdaFunction.prototype.delete = function * () {
 }
 
 LambdaFunction.prototype.invoke = function * (event, alias) {
-  // params
   let params = this.params(['name'], {
     Payload: event,
     Qualifier: alias
   })
 
-  let res = yield invoke(params)
+  let res = yield invokeFunction(params)
   if (res.FunctionError) {
     throw new Error(res.Payload)
   }
@@ -153,9 +145,8 @@ LambdaFunction.prototype.alias = function * (version) {
 }
 
 LambdaFunction.prototype.updateAlias = function * (version) {
-  let params = this
   return yield updateAlias(this.params(['name', 'alias'], {
-    FunctionVersion: version,
+    FunctionVersion: version
   }))
 }
 
@@ -188,7 +179,6 @@ function readConfig (dir) {
   } catch (e) {
     return {}
   }
-
 }
 
 flop(LambdaFunction)
