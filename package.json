@@ -17,6 +17,7 @@
     "@f/is-object": "^1.1.4",
     "@f/map-keys": "^1.0.0",
     "@f/pick": "^1.1.2",
+    "flo-bind": "^1.1.0",
     "hasha": "^2.2.0",
     "pascal-case": "^1.1.2",
     "redux-effects-aws": "^1.0.0"
