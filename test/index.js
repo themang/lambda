@@ -11,17 +11,16 @@ import path from 'path'
 import hasha from 'hasha'
 
 // utils
-import bind from '@f/bind-middleware'
 import throws from '@f/throws'
 
 // redux
-import Flow from 'redux-flo'
+import flob from 'flo-bind'
 import Log from 'redux-log'
 import HandleActions from 'redux-handle-actions'
 
 test('lambda should create', function (t) {
   let log = []
-  let io = bind([Flow(), Log(log), HandleActions(handler)])
+  let io = flob(Log(log), HandleActions(handler))
 
   let lambda = Lambda(path.resolve(__dirname + '/code'), {name: 'code'})
   let zip = 'module.exports = \'foo\''
@@ -53,7 +52,7 @@ test('lambda should create', function (t) {
 
 test('lambda should get config', function (t) {
   let log = []
-  let io = bind([Flow(), Log(log), HandleActions(handler)])
+  let io = flob(Log(log), HandleActions(handler))
 
   let lambda = Lambda(path.resolve(__dirname + '/code'), {name: 'code'})
 
@@ -80,7 +79,7 @@ test('lambda should get config', function (t) {
 
 test('lambda shoud update', function (t) {
   let log = []
-  let io = bind([Flow(), Log(log), HandleActions(handler)])
+  let io = flob(Log(log), HandleActions(handler))
 
   let lambda = Lambda(path.resolve(__dirname + '/code'), {name: 'code'})
   let zip = 'module.exports = \'foo\''
@@ -112,7 +111,7 @@ test('lambda shoud update', function (t) {
 
 test('lambda should delete', function (t) {
   let log = []
-  let io = bind([Flow(), Log(log), HandleActions(handler)])
+  let io = flob(Log(log), HandleActions(handler))
 
   let lambda = Lambda(path.resolve(__dirname + '/code'), {name: 'code'})
 
@@ -139,7 +138,7 @@ test('lambda should delete', function (t) {
 
 test('lambda deploy should update', function (t) {
   let log = []
-  let io = bind([Flow(), Log(log), HandleActions(handler)])
+  let io = flob(Log(log), HandleActions(handler))
 
   let lambda = Lambda(path.resolve(__dirname + '/code'), {name: 'code'})
   let zip = 'module.exports = \'foo\''
@@ -182,7 +181,7 @@ test('lambda deploy should update', function (t) {
 
 test('lambda deploy should create on get config fail', function (t) {
   let log = []
-  let io = bind([Flow(throws), Log(log), HandleActions(handler)])
+  let io = flob(Log(log), HandleActions(handler))
 
   let lambda = Lambda(path.resolve(__dirname + '/code'), {name: 'code'})
   let zip = 'module.exports = \'foo\''
@@ -221,7 +220,7 @@ test('lambda deploy should create on get config fail', function (t) {
 
 test('lambda deploy should not update if code is the same', function (t) {
   let log = []
-  let io = bind([Flow(), Log(log), HandleActions(handler)])
+  let io = flob(Log(log), HandleActions(handler))
 
   let lambda = Lambda(path.resolve(__dirname + '/code'), {name: 'code'})
   let zip = 'module.exports = \'foo\''
@@ -272,7 +271,7 @@ test('lambda should read config from function.json', function (t) {
 
 test('should add alias on create given alias', function (t) {
   let log = []
-  let io = bind([Flow(), Log(log), HandleActions(handler)])
+  let io = flob(Log(log), HandleActions(handler))
 
   let lambda = Lambda(path.resolve(__dirname + '/code'), {name: 'code', alias: 'master'})
   let zip = 'module.exports = \'foo\''

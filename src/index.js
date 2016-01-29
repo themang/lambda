@@ -5,7 +5,6 @@
 // io
 import fs from 'fs'
 import {aws} from 'redux-effects-aws'
-import flop from 'redux-flop'
 
 // modules
 import hasha from 'hasha'
@@ -180,7 +179,5 @@ function readConfig (dir) {
     return {}
   }
 }
-
-flop(LambdaFunction)
 
 export default LambdaFunction

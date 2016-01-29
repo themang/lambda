@@ -12,25 +12,23 @@
   },
   "dependencies": {
     "@f/assign": "^1.2.1",
-    "@f/bind-middleware": "^1.1.1",
     "@f/curry-once": "^1.3.1",
     "@f/defaults": "^1.0.1",
     "@f/is-object": "^1.1.4",
     "@f/map-keys": "^1.0.0",
     "@f/pick": "^1.1.2",
-    "@f/throws": "^1.0.0",
     "hasha": "^2.2.0",
     "pascal-case": "^1.1.2",
-    "redux-effects-aws": "^1.0.0",
-    "redux-flop": "^1.0.0"
+    "redux-effects-aws": "^1.0.0"
   },
   "devDependencies": {
+    "@f/throws": "^1.0.0",
     "babel-cli": "^6.4.0",
     "babel-plugin-transform-decorators": "^6.4.0",
     "babel-polyfill": "^6.3.14",
     "babel-preset-es2015": "^6.3.13",
     "babel-register": "^6.3.13",
-    "redux-flo": "^1.0.5",
+    "flo-bind": "^1.0.1",
     "redux-handle-actions": "^1.0.0",
     "redux-log": "^2.0.0",
     "tape": "^4.2.2"
